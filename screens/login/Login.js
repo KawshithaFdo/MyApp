@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { NativeBaseProvider,Text,Input,Button,HStack, Pressable,Icon,Link,Box } from 'native-base'
 import { Alert,ImageBackground,StyleSheet,View } from 'react-native';
+import { firebase } from './config';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 
 export default function Login({navigation}) {
@@ -8,10 +10,23 @@ export default function Login({navigation}) {
 
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('');
-  const [show, setShow] = React.useState(false);
+  
+  
 
-  const handleClick = () => setShow(!show);
+// const auth = getAuth();
+// signInWithEmailAndPassword(auth, email, password)
+//   .then((userCredential) => {
+//     // Signed in 
+//     const user = userCredential.user;
     
+//   })
+//   .catch((error) => {
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//   });
+ 
+  
+  
   return (
     <NativeBaseProvider>
       <Box flex={1} bg="#2d3436" alignItems="center" justifyContent="center">
