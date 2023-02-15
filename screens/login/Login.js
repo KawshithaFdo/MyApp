@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { NativeBaseProvider,Text,Input,Button,HStack, Pressable,Icon,Link,Box } from 'native-base'
+import { NativeBaseProvider,Text,Input,Button,HStack, Pressable,Icon,Link,Box, AlertDialog } from 'native-base'
 import { Alert,ImageBackground,StyleSheet,View } from 'react-native';
-import { firebase } from './config';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { firebase } from '../../firebase/config'
 
 
 export default function Login({navigation}) {
@@ -12,19 +12,17 @@ export default function Login({navigation}) {
   const [password,setPassword]=useState('');
   
   
+ loginUser = async (email,password)=>{
+  try {
+    await firebase.auth().signInWithEmailAndPassword(email, password) ;
+    navigation.navigate("welcome");
+    setEmail('');
+    setPassword('');
+  } catch (error) {
+    Alert(error.message)
+  }
+ } 
 
-// const auth = getAuth();
-// signInWithEmailAndPassword(auth, email, password)
-//   .then((userCredential) => {
-//     // Signed in 
-//     const user = userCredential.user;
-    
-//   })
-//   .catch((error) => {
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//   });
- 
   
   
   return (
@@ -33,8 +31,8 @@ export default function Login({navigation}) {
       <Text fontSize="4xl" bold  mt="20%" color='white' alignItems={"center"}>My App</Text>
         <Box alignItems={"center"} padding={15}>
  
-            <Input mx="4" placeholder="Email" w="80%" value={email} borderRadius={10} onChangeText={(e)=>{setEmail(e)}} marginTop={20} bgColor="#636e72"/>
-            <Input type='password' mx="4" placeholder="Password" value={password} onChangeText={(e)=>{setPassword(e)}}  w="80%" borderRadius={10} marginTop={5} bgColor="#636e72"/>
+            <Input mx="4" placeholder="Email" w="80%" value={email} borderRadius={10} onChangeText={(email)=>{setEmail(email)}} marginTop={20} bgColor="#636e72"/>
+            <Input type='password' mx="4" placeholder="Password" value={password} onChangeText={(password)=>{setPassword(password)}}  w="80%" borderRadius={10} marginTop={5} bgColor="#636e72"/>
            
               <Button size="lg" variant="link"   w={200}  >
                 <Text style={styles.innerText}>Forgot Password ?</Text>
@@ -43,7 +41,7 @@ export default function Login({navigation}) {
             
             
 
-            <Button size="lg" variant="solid" bgColor={'#fdcb6e'} borderRadius={10}  marginTop={8} w={300} colorScheme="black" onPress={()=>{navigation.navigate("welcome")}}>
+            <Button size="lg" variant="solid" bgColor={'#fdcb6e'} borderRadius={10}  marginTop={8} w={300} colorScheme="black" onPress={()=>{loginUser(email,password)}}>
             <Text style={styles.ttn}> sign in</Text>
                      
             </Button>
