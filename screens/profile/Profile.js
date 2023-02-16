@@ -1,9 +1,20 @@
 import { View, StyleSheet, NativeModules } from 'react-native'
 import React from 'react'
 import { NativeBaseProvider,Text,Input,Button,HStack, Pressable,Icon,Link,Box } from 'native-base'
+import { firebase } from '../../firebase/config'
 
 export default function Profile({navigation}) {
-
+  logoutUser = async ()=>{
+    try {
+      await firebase.auth().signOut() ;
+      navigation.navigate("login")
+      console.log("SignOut");
+    } catch (error) {
+      var errorMessage = error.message;
+      console.log(errorMessage);
+      Alert.alert("Try Again.");
+    }
+   } 
 
 
 
@@ -16,7 +27,7 @@ export default function Profile({navigation}) {
             <Input mx="4" placeholder="Name" w="80%"  borderRadius={10}  marginTop={10} bgColor="#636e72"/>
             <Input type='text' mx="4" placeholder="Email"    w="80%" borderRadius={10} marginTop={5} bgColor="#636e72"/>
            
-            <Button size="lg" variant="solid" bgColor={'#fdcb6e'} borderRadius={10}  marginTop="70%" w={300}  colorScheme="black" onPress={()=>{ {navigation.navigate("login")}}}>
+            <Button size="lg" variant="solid" bgColor={'#fdcb6e'} borderRadius={10}  marginTop="70%" w={300}  colorScheme="black" onPress={()=>{logoutUser()}}>
             <Text style={styles.ttn}>Log out</Text>    
             </Button>
         </Box>
