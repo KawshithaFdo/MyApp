@@ -19,7 +19,8 @@ export default function Login({navigation}) {
     setEmail('');
     setPassword('');
   } catch (error) {
-    Alert(error.message)
+    var errorMessage = error.message;
+    Alert.alert("Wrong Email or Password.");
   }
  } 
 

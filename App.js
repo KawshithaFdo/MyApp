@@ -28,12 +28,14 @@ useEffect(()=>{
   return subscriber;
 },[]);
 
-if(initializing)return null;
-
+if(initializing){
+  return null;
+}
 
 if(!user){
   return(
-      <Stack.Navigator> 
+    
+      <Stack.Navigator  initialRouteName='Splash'> 
       <Stack.Screen options={{headerShown:false}} name="login" component={Login} />
         <Stack.Screen options={{headerShown:false}} name="Splash" component={Splash} />
         <Stack.Screen options={{headerShown:false}} name="signup" component={Signup} /> 
